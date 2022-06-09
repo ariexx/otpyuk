@@ -9,6 +9,10 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Filament\Resources\ServiceResource\RelationManagers;
@@ -18,31 +22,31 @@ class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-view-list';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema(Card::make()->columns(3)->schema([
-                Forms\Components\TextInput::make('service_name')
+                TextInput::make('service_name')
                     ->label('Service Name')
                     ->rules('required'),
-                Forms\Components\TextInput::make('provider_price')
+                TextInput::make('provider_price')
                     ->label('Harga Operan')
                     ->rules('required'),
-                Forms\Components\TextInput::make('price')
+                TextInput::make('price')
                     ->label('Harga Jual')
                     ->rules('required', 'numeric'),
-                Forms\Components\Select::make('discount')
+                Select::make('discount')
                     ->label('Diskon')
                     ->options([
                         'iya' => 'Iya',
                         'tidak' => 'Tidak'
                     ]),
-                Forms\Components\TextInput::make('discount_percentage')
+                TextInput::make('discount_percentage')
                     ->label('Persentasi Diskon')
                     ->rules('required', 'numeric'),
-                Forms\Components\Select::make('is_active')
+                Select::make('is_active')
                     ->label('Active ?')
                     ->options([
                         'iya' => 'Iya',
@@ -55,19 +59,19 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->label('Id')->sortable(),
-                Tables\Columns\TextColumn::make('service_name')->label('Service Name')->searchable(),
-                Tables\Columns\TextColumn::make('provider_price')->label('Harga Operan'),
-                Tables\Columns\TextColumn::make('price')->label('Harga Jual'),
-                Tables\Columns\TextColumn::make('discount')->label('Diskon'),
-                Tables\Columns\TextColumn::make('discount_percentage')->label('Persentasi Diskon'),
-                Tables\Columns\TextColumn::make('is_active')->label('Active ?'),
-                Tables\Columns\TextColumn::make('created_at')->label('Created At'),
+                TextColumn::make('id')->label('Id')->sortable(),
+                TextColumn::make('service_name')->label('Service Name')->searchable(),
+                TextColumn::make('provider_price')->label('Harga Operan'),
+                TextColumn::make('price')->label('Harga Jual'),
+                TextColumn::make('discount')->label('Diskon'),
+                TextColumn::make('discount_percentage')->label('Persentasi Diskon'),
+                TextColumn::make('is_active')->label('Active ?'),
+                TextColumn::make('created_at')->label('Created At'),
             ])
             ->filters([
-                Tables\Filters\Filter::make('aktif')
+                Filter::make('aktif')
                     ->query(fn (Builder $query): Builder => $query->where('is_active', 'iya')),
-                Tables\Filters\Filter::make('diskon')
+                Filter::make('diskon')
                     ->query(fn (Builder $query): Builder => $query->where('discount', 'iya')),
             ]);
     }
