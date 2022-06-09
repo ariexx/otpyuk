@@ -29,6 +29,10 @@ class Service extends Model
         // 'provider_price'
     ];
 
+    protected $casts = [
+        'is_active' => 'string'
+    ];
+
     public function rate()
     {
         return $this->belongsTo(Rate::class);

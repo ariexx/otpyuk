@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('service_name', 25);
             $table->float('provider_price');
             $table->integer('price');
-            $table->enum('discount', ['iya', 'tidak'])->nullable();
+            $table->int('discount')->default(0)->nullable();
             $table->integer('discount_percentage')->nullable();
-            $table->enum('is_active', ['iya', 'tidak'])->default('iya');
+            $table->integer('is_active')->default(1);
             $table->timestamps();
         });
     }

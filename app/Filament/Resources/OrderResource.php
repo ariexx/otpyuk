@@ -55,12 +55,13 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('user.email')->label('User Id')->searchable(['user_id', 'phone_number', 'provider_order_id', 'order_id']),
+                TextColumn::make('user.email')->label('Email')->searchable(['user_id', 'phone_number', 'provider_order_id', 'order_id']),
                 TextColumn::make('operator.operator_name')->label('Operator Id'),
                 TextColumn::make('provider_order_id')->label('Provider Order Id'),
                 TextColumn::make('order_id')->label('Order Id'),
                 TextColumn::make('phone_number')->label('Nomor HP'),
                 TextColumn::make('sms_message')->label('SMS'),
+                TextColumn::make('service.price')->label('Harga')->money('idr', 'idr'),
                 TextColumn::make('status')->label('Status')->enum([
                     '1' => 'Processing',
                     '2' => 'Completed',

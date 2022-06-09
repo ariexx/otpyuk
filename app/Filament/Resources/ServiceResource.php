@@ -15,8 +15,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ServiceResource\Pages;
+use Filament\Forms\Components\Toggle;
 use App\Filament\Resources\ServiceResource\RelationManagers;
 use App\Filament\Resources\ServiceResource\RelationManagers\RatesRelationManager;
+use PowerComponents\LivewirePowerGrid\Themes\Components\Toggleable;
 
 class ServiceResource extends Resource
 {
@@ -46,12 +48,10 @@ class ServiceResource extends Resource
                 TextInput::make('discount_percentage')
                     ->label('Persentasi Diskon')
                     ->rules('required', 'numeric'),
-                Select::make('is_active')
-                    ->label('Active ?')
-                    ->options([
-                        'iya' => 'Iya',
-                        'tidak' => 'Tidak'
-                    ]),
+                Toggle::make('is_active')
+                    ->onIcon('heroicon-s-lightning-bolt')
+                    ->offIcon('heroicon-o-lightning-bolt')
+                    ->inline(false)
             ]));
     }
 
@@ -61,8 +61,8 @@ class ServiceResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('Id')->sortable(),
                 TextColumn::make('service_name')->label('Service Name')->searchable(),
-                TextColumn::make('provider_price')->label('Harga Operan'),
-                TextColumn::make('price')->label('Harga Jual'),
+                TextColumn::make('provider_price')->label('Harga Operan')->money('idr', 'idr'),
+                TextColumn::make('price')->label('Harga Jual')->money('idr', 'idr'),
                 TextColumn::make('discount')->label('Diskon'),
                 TextColumn::make('discount_percentage')->label('Persentasi Diskon'),
                 TextColumn::make('is_active')->label('Active ?'),
