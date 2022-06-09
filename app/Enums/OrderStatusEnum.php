@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Enums;
+
+enum OrderStatusEnum: int
+{
+    case REPEAT = 0;
+    case PROCESSING = 1;
+    case COMPLETED = 2;
+    case CANCELED = 3;
+    case PENDING = 4;
+    // case 2 = 'Processing';
+    // case 3 = 'Done';
+    // case 4 = 'Canceled';
+}
