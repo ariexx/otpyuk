@@ -8,8 +8,9 @@ use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use App\Filament\Resources\UserResource\Pages;
+use Filament\Forms\Components\Card;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
@@ -21,7 +22,7 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(Card::make()->columns(3)->schema([
                 Forms\Components\TextInput::make('email')
                     ->label('Email')
                     ->rules('required', 'email'),
@@ -35,21 +36,24 @@ class UserResource extends Resource
                     ])
                     ->rules('required'),
                 Forms\Components\TextInput::make('balance')->label('Balance')->rules('required', 'numeric'),
-            ]);
+            ]));
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('email')->label('Email'),
+                Tables\Columns\TextColumn::make('id')->label('Id')->sortable(),
+                Tables\Columns\TextColumn::make('email')->label('Email')->searchable(['email']),
                 Tables\Columns\TextColumn::make('role')->label('Role'),
                 Tables\Columns\TextColumn::make('balance')->label('Balance'),
                 Tables\Columns\TextColumn::make('created_at')->label('Created At'),
             ])
             ->filters([
                 Tables\Filters\Filter::make('verified')
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('email_verified_at'))
+                    ->query(fn (Builder $query): Builder => $query->whereNotNull('email_verified_at')),
+                Tables\Filters\Filter::make('Admin Only')
+                    ->query(fn (Builder $query): Builder => $query->where('role', 'Admin')),
             ]);
     }
 

@@ -25,8 +25,8 @@ class Service extends Model
     ];
 
     protected $hidden = [
-        'provider_id',
-        'provider_price'
+        // 'provider_id',
+        // 'provider_price'
     ];
 
     public function rate()
