@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('email', 50)->unique();
             $table->string('password');
-            $table->enum('role', ['Normal', 'Reseller']);
-            $table->integer('balance');
-            $table->string('apikey');
+            $table->enum('role', ['Normal', 'Reseller', 'Admin'])->default('Normal');
+            $table->integer('balance')->default(0);
+            $table->string('apikey')->default(md5(uniqid()));
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
