@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0.2",
         "blade-ui-kit/blade-ui-kit": "^0.3.4",
+        "doctrine/dbal": "^3.3",
         "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "jantinnerezo/livewire-alert": "^2.2",
