@@ -67,9 +67,15 @@ class ServiceResource extends Resource
                 TextColumn::make('service_name')->label('Service Name')->searchable(),
                 TextColumn::make('provider_price')->label('Harga Operan')->money('idr', 'idr'),
                 TextColumn::make('price')->label('Harga Jual')->money('idr', 'idr'),
-                TextColumn::make('discount')->label('Diskon'),
+                TextColumn::make('discount')->label('Diskon')->enum([
+                    1 => 'Iya',
+                    0 => 'Tidak'
+                ]),
                 TextColumn::make('discount_percentage')->label('Persentasi Diskon'),
-                TextColumn::make('is_active')->label('Active ?'),
+                TextColumn::make('is_active')->label('Active ?')->enum([
+                    1 => 'Ya',
+                    0 => 'Tidak'
+                ]),
                 TextColumn::make('created_at')->label('Created At'),
             ])
             ->filters([

@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Admin::factory(1)->create();
-        \App\Models\User::factory(5)->create();
-        \App\Models\Rate::factory(1)->create(); //jalankan hanya sekali
+        // \App\Models\Admin::factory(1)->create();
+        // \App\Models\User::factory(5)->create();
+        // \App\Models\Rate::factory(1)->create(); //jalankan hanya sekali
         \App\Models\Operator::factory(1)->create([
             'operator_name' => 'telkomsel',
         ]);
