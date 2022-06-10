@@ -30,6 +30,10 @@ class ServiceResource extends Resource
     {
         return $form
             ->schema(Card::make()->columns(3)->schema([
+
+                TextInput::make('provider_id')
+                    ->label('Provider Id')
+                    ->rules('required', 'string', 'max:5'),
                 TextInput::make('service_name')
                     ->label('Service Name')
                     ->rules('required'),
@@ -42,12 +46,12 @@ class ServiceResource extends Resource
                 Select::make('discount')
                     ->label('Diskon')
                     ->options([
-                        'iya' => 'Iya',
-                        'tidak' => 'Tidak'
+                        1 => 'Iya',
+                        0 => 'Tidak'
                     ]),
                 TextInput::make('discount_percentage')
                     ->label('Persentasi Diskon')
-                    ->rules('required', 'numeric'),
+                    ->rules('numeric'),
                 Toggle::make('is_active')
                     ->onIcon('heroicon-s-lightning-bolt')
                     ->offIcon('heroicon-o-lightning-bolt')

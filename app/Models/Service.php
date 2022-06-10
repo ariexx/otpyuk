@@ -30,7 +30,7 @@ class Service extends Model
     ];
 
     protected $casts = [
-        'is_active' => 'string'
+        'provider_price' => 'float',
     ];
 
     public function rate()

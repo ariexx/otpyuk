@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Response;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,5 +35,11 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             // URL::forceScheme('https'); // gausah pake .htaccess lgi buat setting https itu udah di force sama si URL ?itu nanti buat di cpanel
         }
+        Response::macro('message', function ($success, $data) {
+            return Response::json([
+                'success'  => $success,
+                'message' => $data,
+            ]);
+        });
     }
 }
