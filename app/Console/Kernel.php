@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         sleep(2);
-        $schedule->command('order:check')->everyMinute();
+        $schedule->command('order:check')->everyMinute()->runInBackground();
     }
 
     /**

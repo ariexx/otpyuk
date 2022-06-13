@@ -35,7 +35,6 @@ class Show extends Component
                 $smsLama = Order::findOrFail($id);
                 $smsLama->update([
                     'status' => OrderStatusEnum::REPEAT,
-                    'sms_message' => implode(':', [$smsLama->sms_message]),
                     // 'sms_message' => '',
                 ]);
                 return $this->alert('success', 'SMS direquest kembali!');
@@ -66,7 +65,6 @@ class Show extends Component
                 $smsLama = Order::findOrFail($id);
                 $smsLama->update([
                     'status' => OrderStatusEnum::REPEAT,
-                    'sms_message' => implode(':', [$smsLama->sms_message]),
                     // 'sms_message' => '',
                 ]);
                 return $this->alert('success', 'SMS direquest kembali!');

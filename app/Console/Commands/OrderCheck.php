@@ -53,14 +53,14 @@ class OrderCheck extends Command
                 case $explodeStatus[0] == 'STATUS_WAIT_RETRY':
                     $order->update([
                         'status' => OrderStatusEnum::REPEAT,
-                        'sms_message' => implode(':', [$explodeStatus[1]]),
+                        'sms_message' => implode(':', [$order->sms_message, $explodeStatus[1]]),
                     ]);
                     break;
                 default:
-                    $this->info($getStatusOrder . ' Order ID: ' . $order->id);
+                    info($getStatusOrder . ' Order ID: ' . $order->id);
                     break;
             }
         }
-        $this->info('Checking all status of orders');
+        info('Checking all status of orders');
     }
 }
