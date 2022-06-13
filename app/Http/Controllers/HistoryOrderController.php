@@ -10,7 +10,7 @@ class HistoryOrderController extends Controller
 
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::all(); //refactor
         return view('orders.history-order', compact('orders'));
     }
 }

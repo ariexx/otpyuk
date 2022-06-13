@@ -39,7 +39,32 @@ class Show extends Component
 
     public function cancel($id)
     {
-        $this->emit('refreshOrderTable');
+        $idOrder = Order::query()->where('id', $id)->value('provider_order_id');
+        // $cancelActivation = file_get_contents(env('SMSHUB_URL') . '?api_key=' . env('SMSHUB_API_KEY') . '&action=setStatus&status=8&id=' . $idOrder);
+        $cancelActivation = file_get_contents('https://smshub.org/stubs/handler_api.php?api_key=129471Ue15a55422c86f266e9116852521df6f5&action=setStatus&status=8&id=' . $idOrder);
+        switch ($cancelActivation) {
+            case 'ACCESS_CANCEL':
+                User::findOrFail(auth()->user()->id)->update([
+                    'balance' => User::findOrFail(auth()->user()->id)->balance + Order::findOrFail($id)->service->price,
+                ]);
+                Order::findOrFail($id)->update([
+                    'status' => OrderStatusEnum::CANCELED,
+                ]);
+                return $this->alert('success', 'Success Cancel Order!');
+                break;
+            case 'ACCESS_READY':
+                return $this->alert('success', 'SMS Waiting');
+                break;
+            case 'ACCESS_RETRY_GET':
+                return $this->alert('error', 'We expect a new SMS!');
+                break;
+            case 'ACCESS_ACTIVATION':
+                return $this->alert('error', 'Activation completed successfully!');
+                break;
+            default:
+                return $this->alert('error', 'Something went wrong!');
+                break;
+        }
         if (Order::findOrFail($id)->expires_at->isPast()) {
             User::findOrFail(auth()->user()->id)->update([
                 'balance' => User::findOrFail(auth()->user()->id)->balance + Order::findOrFail($id)->service->price,
@@ -51,13 +76,7 @@ class Show extends Component
             ]);
         }
 
-        User::findOrFail(auth()->user()->id)->update([
-            'balance' => User::findOrFail(auth()->user()->id)->balance + Order::findOrFail($id)->service->price,
-        ]);
-
-        return Order::findOrFail($id)->update([
-            'status' => OrderStatusEnum::CANCELED,
-        ]);
+        $this->emit('refreshOrderTable');
     }
 
     public function render()
