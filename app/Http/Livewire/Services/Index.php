@@ -17,7 +17,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->data = Service::all();
+        $this->data = Service::query()->where('is_active', 1)->get();
     }
 
     public function render()

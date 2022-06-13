@@ -20,28 +20,73 @@ class Show extends Component
 
     public function done($id)
     {
+        //confirm sms and completed activation
+        $idOrder = Order::query()->where('id', $id)->value('provider_order_id');
+        $completedActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=6&id=' . $idOrder);
+
+        switch ($completedActivation) {
+            case 'ACCESS_READY':
+                return $this->alert('success', 'SMS Waiting');
+                break;
+            case 'ACCESS_READY':
+                return $this->alert('success', 'SMS Waiting');
+                break;
+            case 'ACCESS_RETRY_GET':
+                $smsLama = Order::findOrFail($id);
+                $smsLama->update([
+                    'status' => OrderStatusEnum::REPEAT,
+                    'sms_message' => implode(':', [$smsLama->sms_message]),
+                    // 'sms_message' => '',
+                ]);
+                return $this->alert('success', 'SMS direquest kembali!');
+                break;
+            case 'ACCESS_ACTIVATION':
+                Order::findOrFail($id)->update([
+                    'status' => OrderStatusEnum::COMPLETED,
+                ]);
+                return $this->alert('success', 'Activation completed successfully!');
+                break;
+            default:
+                return $this->alert('error', 'Something went wrong!');
+                break;
+        }
         $this->emit('refreshOrderTable');
-        return Order::findOrFail($id)->update([
-            'status' => OrderStatusEnum::COMPLETED,
-        ]);
     }
 
     public function repeat($id)
     {
+        //request another sms
+        $idOrder = Order::query()->where('id', $id)->value('provider_order_id');
+        $requestNewActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=3&id=' . $idOrder);
+        switch ($requestNewActivation) {
+            case 'ACCESS_READY':
+                return $this->alert('success', 'SMS Waiting');
+                break;
+            case 'ACCESS_RETRY_GET':
+                $smsLama = Order::findOrFail($id);
+                $smsLama->update([
+                    'status' => OrderStatusEnum::REPEAT,
+                    'sms_message' => implode(':', [$smsLama->sms_message]),
+                    // 'sms_message' => '',
+                ]);
+                return $this->alert('success', 'SMS direquest kembali!');
+                break;
+            case 'ACCESS_ACTIVATION':
+                return $this->alert('success', 'Activation completed successfully!');
+                break;
+            default:
+                return $this->alert('error', 'Something went wrong!');
+                break;
+        }
         $this->emit('refreshOrderTable');
-        $smsLama = Order::findOrFail($id)->sms_message;
-        return Order::findOrFail($id)->update([
-            'status' => OrderStatusEnum::REPEAT,
-            'sms_message' => implode(',', [$smsLama, Str::random(10)]),
-            // 'sms_message' => '',
-        ]);
     }
 
     public function cancel($id)
     {
+        $Order = Order::query()->where('id', $id)->first();
         $idOrder = Order::query()->where('id', $id)->value('provider_order_id');
         // $cancelActivation = file_get_contents(env('SMSHUB_URL') . '?api_key=' . env('SMSHUB_API_KEY') . '&action=setStatus&status=8&id=' . $idOrder);
-        $cancelActivation = file_get_contents('https://smshub.org/stubs/handler_api.php?api_key=129471Ue15a55422c86f266e9116852521df6f5&action=setStatus&status=8&id=' . $idOrder);
+        $cancelActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=8&id=' . $idOrder);
         switch ($cancelActivation) {
             case 'ACCESS_CANCEL':
                 User::findOrFail(auth()->user()->id)->update([
@@ -59,13 +104,13 @@ class Show extends Component
                 return $this->alert('error', 'We expect a new SMS!');
                 break;
             case 'ACCESS_ACTIVATION':
-                return $this->alert('error', 'Activation completed successfully!');
+                return $this->alert('success', 'Activation completed successfully!');
                 break;
             default:
                 return $this->alert('error', 'Something went wrong!');
                 break;
         }
-        if (Order::findOrFail($id)->expires_at->isPast()) {
+        if ($Order->expires_at->isPast() && $Order->status == OrderStatusEnum::PENDING) {
             User::findOrFail(auth()->user()->id)->update([
                 'balance' => User::findOrFail(auth()->user()->id)->balance + Order::findOrFail($id)->service->price,
             ]);
@@ -82,5 +127,6 @@ class Show extends Component
     public function render()
     {
         return view('livewire.history-order.show');
+        $this->emit('refreshOrderTable');
     }
 }

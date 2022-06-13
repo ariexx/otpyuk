@@ -17,7 +17,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->data = Operator::all();
+        $this->data = Operator::query()->select('id', 'operator_name')->get();
     }
 
     public function render()

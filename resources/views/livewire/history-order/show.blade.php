@@ -1,6 +1,6 @@
 @php
 $semuaPesan = $history->sms_message;
-$pecahPesan = explode(',', $semuaPesan);
+$pecahPesan = explode(':', $semuaPesan);
 $lastPesan = last($pecahPesan);
 @endphp
 <tr>
