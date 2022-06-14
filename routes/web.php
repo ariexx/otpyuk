@@ -32,7 +32,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/history-order', [HistoryOrderController::class, 'index'])->name('history-order');
+    Route::get('/history-order', [HistoryOrderController::class, 'index'])->name('history-order'); // ini kah ?
 });
 
 //route push
