@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Service;
 
 use Livewire\Component;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Enums\OrderStatusEnum;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -65,8 +66,13 @@ class InstantOrder extends Component
                 break;
             default:
                 $explode = explode(':', $Order);
+                if (Arr::exists($explode, 1) != true) { //wait kita tes cok, kayanya bner,
+                    return $this->alert('error', '[Code 1] Tidak Tersedia!'); //try catch aja lah, eh cok itu maksudnya explode[0] itu array ke 0 kan ? iya, kalo misal arraynya begini
+                    //SUCCESS:CODE ?
+                }
                 $idOrder = $explode[1];
                 $number = $explode[2];
+
                 $this->order::create([
                     'user_id' => auth()->user()->id,
                     'operator_id' => '6',

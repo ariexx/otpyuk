@@ -13,7 +13,7 @@ class HistoryOrderController extends Controller
     public function index()
     {
         //parsing enums to string
-        $orders = Order::query()->where('user_id', auth()->user()->id)->get(); //refactor
+        $orders = Order::search('test')->where('user_id', auth()->user()->id)->get(); //refactor
         return view('orders.history-order', compact('orders'));
     }
 }
