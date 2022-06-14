@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HistoryOrderController;
 use App\Http\Controllers\Push\ServiceController;
+use App\Settings\GeneralSettings;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,10 @@ Route::get('/', function () {
 });
 
 Auth::routes(['login' => false, 'register' => false, 'verify' => true]);
+
+Route::get('test', function (GeneralSettings $setting) {
+    echo $setting->site_name;
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');

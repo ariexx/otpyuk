@@ -8,36 +8,26 @@ use App\Models\Service;
 // use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\Http;
 
 class ServiceController extends Controller
 {
     public function rateUpdate()
     {
-        $rate = Rate::first();
+        $setting = new GeneralSettings;
         $getPricesProvider = Http::withHeaders([
             "Content-Type" => "text/plain",
             "apikey" => "qcVvWj8Jgyf1TDEEp3qnRYLvtrYyvUG1"
         ])->get('https://api.apilayer.com/fixer/convert?to=IDR&from=RUB&amount=1')->json();
-        if ($rate->rate == round($getPricesProvider['result'])) {
+        if ($setting->rate == round($getPricesProvider['result'])) {
             return response()->message(true, 'Rate is Up to Date');
         }
         if ($getPricesProvider['success'] == true) {
-            $update = Rate::query()->where('id', 1)->update([
-                'rate' => $getPricesProvider['result'],
-                'profit' => 10
-            ]);
-            if ($update) {
+            $setting->rate = $getPricesProvider['result'];
+            if ($setting->save()) {
                 return response()->message(true, 'Berhasil update rate ke database');
             }
-            $update = Rate::query()->create([
-                'rate' => $getPricesProvider['result'],
-                'profit' => 10
-            ]);
-            if ($update) {
-                return response()->message(true, 'Berhasil Menambah rate ke database');
-            }
-            return response()->message(false, 'Failed update rate ke db');
         }
         return response()->message(false, 'API Error');
     }
@@ -49,7 +39,11 @@ class ServiceController extends Controller
             'action' => 'getNumbersStatusAndCostHubFree',
         ])->json();
 
-        $getListOfCountriesAndOperators = Http::get('http://smshub.org/api.php?cat=scripts&act=manageActivations&asc=getListOfCountriesAndOperators')->json();
+        $getListOfCountriesAndOperators = Http::get('http://smshub.org/api.php', [
+            'cat' => 'scripts',
+            'act' => 'manageActivations',
+            'asc' => 'getListOfCountriesAndOperators',
+        ])->json();
 
         $data = [];
         $getProviderPrices = Rate::where('id', 1)->first();
