@@ -38,7 +38,7 @@ class OrderCheck extends Command
                 case $explodeStatus[0] == 'STATUS_OK':
                     $order->update([
                         'status' => OrderStatusEnum::PROCESSING,
-                        'sms_message' => $explodeStatus[1],
+                        'sms_message' => implode(':', [$order->sms_message, $explodeStatus[1]]),
                     ]);
                     break;
                 case 'STATUS_WAIT_CODE':

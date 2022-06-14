@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Service;
 use Livewire\Component;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Enums\OrderStatusEnum;
 
@@ -26,9 +28,10 @@ class Normal extends Component
         $this->operatorId = $id;
     }
 
-    public function mount(Order $order)
+    public function mount(Order $order, User $user)
     {
         $this->order = $order;
+        $this->user = $user;
     }
 
     public function rules()
@@ -68,9 +71,13 @@ class Normal extends Component
                 break;
             default:
                 $explode = explode(':', $Order);
+                if (Arr::exists($explode, 1) != true) {
+                    return $this->alert('error', '[Code 1] Tidak Tersedia!');
+                }
                 $idOrder = $explode[1];
                 $number = $explode[2];
-                return $this->order::create([
+
+                $this->order::create([
                     'user_id' => auth()->user()->id,
                     'operator_id' => $this->operatorId,
                     'service_id' => $this->serviceId,

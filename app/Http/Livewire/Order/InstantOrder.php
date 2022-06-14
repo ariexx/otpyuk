@@ -66,9 +66,8 @@ class InstantOrder extends Component
                 break;
             default:
                 $explode = explode(':', $Order);
-                if (Arr::exists($explode, 1) != true) { //wait kita tes cok, kayanya bner,
-                    return $this->alert('error', '[Code 1] Tidak Tersedia!'); //try catch aja lah, eh cok itu maksudnya explode[0] itu array ke 0 kan ? iya, kalo misal arraynya begini
-                    //SUCCESS:CODE ?
+                if (Arr::exists($explode, 1) != true) {
+                    return $this->alert('error', '[Code 1] Tidak Tersedia!');
                 }
                 $idOrder = $explode[1];
                 $number = $explode[2];

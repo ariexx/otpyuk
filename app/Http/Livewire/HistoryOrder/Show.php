@@ -32,7 +32,7 @@ class Show extends Component
                 $smsLama = Order::findOrFail($id);
                 $smsLama->update([
                     'status' => OrderStatusEnum::REPEAT,
-                    // 'sms_message' => '',
+
                 ]);
                 return $this->alert('success', 'SMS direquest kembali!');
                 break;
@@ -62,7 +62,7 @@ class Show extends Component
                 $smsLama = Order::findOrFail($id);
                 $smsLama->update([
                     'status' => OrderStatusEnum::REPEAT,
-                    // 'sms_message' => '',
+
                 ]);
                 return $this->alert('success', 'SMS direquest kembali!');
                 break;
@@ -105,7 +105,7 @@ class Show extends Component
                 return $this->alert('error', 'Something went wrong!');
                 break;
         }
-        if ($Order->expires_at->isPast()) { //ini logic ambigu cok napa, kalo orderannya status proces tapi timenya udah selesai dia masih nempel di ono, harusnya kan kgk
+        if ($Order->expires_at->isPast()) {
             User::findOrFail(auth()->user()->id)->update([
                 'balance' => User::findOrFail(auth()->user()->id)->balance + Order::findOrFail($id)->service->price,
             ]);

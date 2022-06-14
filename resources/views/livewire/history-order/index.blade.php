@@ -1,8 +1,11 @@
 <div wire:poll.10s>
+    {{-- <div class="input mt-2 mb-2">
+        <input type="text" class="form-control" wire:model="search" placeholder="Search">
+    </div> --}}
     <table class="table table-striped" id="table-1">
         <thead>
             <tr>
-                <th>SMS Message</th>
+                <th>SMS</th>
                 <th>Nomor</th>
                 <th>Expired</th>
                 <th>Action</th>

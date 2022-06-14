@@ -14,50 +14,21 @@ class Index extends Component
 {
     use WithPagination;
 
-    // public function mount()
-    // {
-    //     $this->data = Order::latest()->get();
-    // }
-
     protected $listeners = ['refreshOrderTable' => '$refresh'];
 
     public function render()
     {
         return view('livewire.history-order.index', [
             // 'data' => Order::latest()->simplePaginate(5),
-            // 'data' => Order::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->latest()->simplePaginate(25)->latest(),
+            // 'data' => Order::search($this->search)->where('user_id', auth()->user()->id)->where('created_at', Carbon::today())->paginate(10),
             // 'data' => Order::findOrFail(2)->whereDate('created_at', Carbon::today())->latest()->simplePaginate(25),
             // 'data' => DB::table('orders')->select('orders.*')->where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->latest(),
-            'data' => Order::query()
+            'data' =>
+            Order::query()
                 ->where('user_id', auth()->user()->id)
                 ->startWasExpired()
                 ->whereNot('status', OrderStatusEnum::COMPLETED)
                 ->whereDate('created_at', Carbon::today())->latest()->paginate(10),
         ]);
     }
-
-    // public function repeat($id)
-    // {
-    //     //Todo: repeating sms to customer
-    // }
-
-    // public function done($id)
-    // {
-    //     //Todo: done sms to customer
-    // }
-
-    // public function done($id)
-    // {
-    //     return Order::findOrFail($id)->update([
-    //         'status' => OrderStatusEnum::COMPLETED,
-    //     ]);
-    // }
-
-    // public function repeat($id)
-    // {
-    //     $order = Order::where('user_id', auth()->id())->findOr($id, function () {
-    //         session()->flash('alert', 'Data ga ada.');
-    //         return back();
-    //     });
-    // }
 }

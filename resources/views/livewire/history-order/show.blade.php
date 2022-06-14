@@ -1,6 +1,9 @@
 @php
 $semuaPesan = $history->sms_message;
 $pecahPesan = explode(':', $semuaPesan);
+// if ($history->status === \App\Enums\OrderStatusEnum::REPEAT) {
+//     $lastPesan = '-';
+// }
 $lastPesan = last($pecahPesan);
 @endphp
 <tr>
@@ -12,12 +15,13 @@ $lastPesan = last($pecahPesan);
                 @if ($history->expires_at->isPast())
                     -
                 @else
-                    <span x-text="timer.minutes">{{ $component->minutes() }}</span>:
-                    <span x-text="timer.seconds">{{ $component->seconds() }}</span>
+                    <span x-text="timer.minutes">{{ $component->minutes() }}</span> Menit
+
+                    {{-- <span x-text="timer.seconds">{{ $component->seconds() }}</span> --}}
                 @endif
             </x-countdown>
         @elseif($history->status == \App\Enums\OrderStatusEnum::CANCELED)
-            CANCELED
+            Canceled
         @else
             Completed
         @endif
