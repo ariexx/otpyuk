@@ -28,9 +28,6 @@ class Show extends Component
             case 'ACCESS_READY':
                 return $this->alert('success', 'SMS Waiting');
                 break;
-            case 'ACCESS_READY':
-                return $this->alert('success', 'SMS Waiting');
-                break;
             case 'ACCESS_RETRY_GET':
                 $smsLama = Order::findOrFail($id);
                 $smsLama->update([

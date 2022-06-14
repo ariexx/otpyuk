@@ -2,7 +2,10 @@
     <label>Services :</label>
     <select class="form-control" wire:model='servicesId'>
         @foreach ($data as $service)
-            <livewire:services.show :service="$service" :key="$service->id" />
+            {{-- <livewire:services.show :service="$service" :key="$service->id" /> --}}
+            <option value="{{ $service->id }}">{{ Str::ucfirst($service->service_name) }} -
+                Rp.{{ $service->price }}
+            </option>
             {{-- Todo: Disini idenya mau nampilin list services ke services.show --}}
         @endforeach
     </select>
