@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HistoryOrderController;
 use App\Http\Controllers\Push\ServiceController;
+use App\Settings\GeneralSettings;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,10 @@ Route::get('/', function () {
 
 Auth::routes(['login' => false, 'register' => false, 'verify' => true]);
 
+Route::get('test', function (GeneralSettings $setting) {
+    echo $setting->site_name;
+});
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');
     Route::get('/register', Register::class)->name('register');
@@ -32,7 +37,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/history-order', [HistoryOrderController::class, 'index'])->name('history-order');
+    Route::get('/history-order', [HistoryOrderController::class, 'index'])->name('history-order'); // ini kah ?
 });
 
 //route push

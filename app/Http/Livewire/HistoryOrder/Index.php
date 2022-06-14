@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\HistoryOrder;
 
+use App\Enums\OrderStatusEnum;
 use Carbon\Carbon;
 use App\Models\Order;
 use Livewire\Component;
@@ -27,7 +28,11 @@ class Index extends Component
             // 'data' => Order::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->latest()->simplePaginate(25)->latest(),
             // 'data' => Order::findOrFail(2)->whereDate('created_at', Carbon::today())->latest()->simplePaginate(25),
             // 'data' => DB::table('orders')->select('orders.*')->where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->latest(),
-            'data' => Order::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->latest()->simplePaginate(10),
+            'data' => Order::query()
+                ->where('user_id', auth()->user()->id)
+                ->startWasExpired()
+                ->whereNot('status', OrderStatusEnum::COMPLETED)
+                ->whereDate('created_at', Carbon::today())->latest()->paginate(10),
         ]);
     }
 

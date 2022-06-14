@@ -105,7 +105,7 @@ class Show extends Component
                 return $this->alert('error', 'Something went wrong!');
                 break;
         }
-        if ($Order->expires_at->isPast() && $Order->status == OrderStatusEnum::PENDING) {
+        if ($Order->expires_at->isPast()) { //ini logic ambigu cok napa, kalo orderannya status proces tapi timenya udah selesai dia masih nempel di ono, harusnya kan kgk
             User::findOrFail(auth()->user()->id)->update([
                 'balance' => User::findOrFail(auth()->user()->id)->balance + Order::findOrFail($id)->service->price,
             ]);

@@ -2,24 +2,28 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Laravel\Scout\Searchable;
 use App\Enums\OrderStatusEnum;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// use Laravel\Scout\Attributes\SearchUsingFullText;
-// use Laravel\Scout\Attributes\SearchUsingPrefix;
-// use Laravel\Scout\Searchable;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
-    use HasFactory;
-    // use HasFactory, Searchable;
+    use HasFactory, Searchable;
 
     /**
      * Get the indexable data array for the model.
      *
      * @return array
      */
+<<<<<<< HEAD
     // #[SearchUsingPrefix(['order_id'])]
+=======
+    #[SearchUsingPrefix(['order_id'])]
+>>>>>>> Order
     public function toSearchableArray()
     {
         return [
@@ -67,5 +71,10 @@ class Order extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function scopeStartWasExpired($query)
+    {
+        return $query->where('start_at', '<', Carbon::parse($this->start_at)->addMinutes(20));
     }
 }
