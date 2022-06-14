@@ -19,11 +19,7 @@ class Order extends Model
      *
      * @return array
      */
-<<<<<<< HEAD
-    // #[SearchUsingPrefix(['order_id'])]
-=======
     #[SearchUsingPrefix(['order_id'])]
->>>>>>> Order
     public function toSearchableArray()
     {
         return [
