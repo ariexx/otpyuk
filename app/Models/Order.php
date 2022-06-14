@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\Enums\OrderStatusEnum;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Attributes\SearchUsingFullText;
-use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Carbon\Carbon;
 use Laravel\Scout\Searchable;
+use App\Enums\OrderStatusEnum;
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -66,5 +67,10 @@ class Order extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function scopeStartWasExpired($query)
+    {
+        return $query->where('start_at', '<', Carbon::parse($this->start_at)->addMinutes(20));
     }
 }

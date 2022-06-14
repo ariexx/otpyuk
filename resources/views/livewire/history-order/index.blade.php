@@ -9,12 +9,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $history)
-                @if (empty($history) || $history->status === \App\Enums\OrderStatusEnum::COMPLETED || $history->status === \App\Enums\OrderStatusEnum::CANCELED)
-                @else
-                    <livewire:history-order.show :history="$history" :key="$history->id . uniqid()" />
-                @endif
-            @endforeach
+            @forelse ($data as $history)
+                <livewire:history-order.show :history="$history" :key="$history->id . uniqid()" />
+            @empty
+                <tr>
+                    <td colspan="4" class="text-center">
+                        <h5>Tidak ada data</h5>
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
     @if (empty($history) || $history->status === \App\Enums\OrderStatusEnum::COMPLETED || $history->status === \App\Enums\OrderStatusEnum::CANCELED || empty($data))
