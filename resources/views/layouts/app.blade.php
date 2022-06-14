@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <script src="{{ asset(mix('js/app.js')) }}" defer data-turbolinks-track="reload"></script>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('modules/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('modules/fontawesome/css/all.min.css') }}">
@@ -19,13 +20,12 @@
     <link rel="stylesheet" href="{{ asset('modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}"> --}}
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" data-turbo-track="reload">
     <link rel="stylesheet" href="{{ asset('css/components.css') }}">
 
     @livewireStyles
     @bukStyles
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <x-livewire-alert::scripts />
 </head>
 
@@ -66,7 +66,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('logout') }}" class="nav-link"
                                     onclick="event.preventDefault();
-                                                                                                                                                                                                                            document.getElementById('logout-form').submit();"><i
+                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();"><i
                                         class="fas fa-arrow-right"></i><span><b>{{ __('Logout') }}</b></span></a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     class="d-none">
@@ -150,6 +150,8 @@
     @livewireScripts
     @stack('scripts')
     @bukScripts
+    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.4/dist/livewire-turbolinks.js"
+        data-turbolinks-eval="false" data-turbo-eval="false"></script>
 </body>
 
 </html>
