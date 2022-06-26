@@ -50,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function canAccessFilament(): bool
     {
-        return str_ends_with($this->email, '@otpyuk.test') && $this->hasVerifiedEmail() && $this->role === 'Admin';
+        return $this->hasVerifiedEmail() && $this->role === 'Admin';
     }
 
     public function getFilamentName(): string

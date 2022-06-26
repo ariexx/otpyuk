@@ -23,9 +23,9 @@ class ServiceFactory extends Factory
             'service_name' => $this->faker->word,
             'provider_price' => $this->faker->numberBetween(1, 100),
             'price' => $this->faker->numberBetween(1, 2000),
-            'discount' => 'tidak',
+            'discount' => '0',
             'discount_percentage' => 0,
-            'is_active' => 'iya',
+            'is_active' => '1',
         ];
     }
 }

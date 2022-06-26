@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\Admin::factory(1)->create();
-        // \App\Models\User::factory(5)->create();
-        // \App\Models\Rate::factory(1)->create(); //jalankan hanya sekali
+        \App\Models\Admin::factory(1)->create();
+        \App\Models\User::factory(5)->create();
+        \App\Models\Rate::factory(1)->create(); //jalankan hanya sekali
         \App\Models\Operator::factory(1)->create([
             'operator_name' => 'telkomsel',
         ]);
@@ -37,8 +37,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Operator::factory(1)->create([
             'operator_name' => 'any',
         ]);
-        // \App\Models\Service::factory(100)->create();
-        // \App\Models\Order::factory(3)->create();
+        \App\Models\Service::factory(100)->create();
+        \App\Models\Order::factory(3)->create();
         DepositMethod::factory(1)->create();
         Deposit::factory(1)->create();
     }
