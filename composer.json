@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "algolia/algoliasearch-client-php": "^3.2",
         "blade-ui-kit/blade-ui-kit": "^0.3.4",
         "doctrine/dbal": "^3.3",
         "filament/filament": "^2.0",

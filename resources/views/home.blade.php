@@ -16,28 +16,20 @@
                     <div class="card-body">
                         <div class="col text-center">
                             <div class="btn btn-outline-dark btn-icon icon-left mb-2">
-                                <i class="fas fa-user"></i> Saldo : <span
-                                    class="badge">{{ rupiah($balance) }}</span>
+                                <i class="fas fa-user"></i> Saldo : <span class="badge">{{ rupiah($balance) }}</span>
                             </div>
                         </div>
-                        <ul class="nav nav-pills justify-content-center" id="myTab3" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link border active mr-3" id="home-tab3" data-toggle="tab" href="#home3"
-                                    role="tab" aria-controls="home" aria-selected="true">Instant Order</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link border" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab"
-                                    aria-controls="profile" aria-selected="false">Normal</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent2">
-                            <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
+                        {{-- <div class="tab-content" id="myTabContent2">
+                            <div class="tab-pane fade show active" id="home3" role="tabpanel"
+                                aria-labelledby="home-tab3">
                                 <livewire:order.instant-order />
                             </div>
                             <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
                                 <livewire:order.normal />
                             </div>
-                        </div>
+                        </div> --}}
+                        {{-- <livewire:order.instant-order /> --}}
+                        <livewire:order.normal />
                     </div>
                 </div>
             </div>

@@ -52,7 +52,9 @@ class InstantOrder extends Component
                 'toast' => true,
             ]);
         }
-        $idProvider = Service::query()->where('id', $this->serviceId)->value('provider_id');
+        $idProvider = Service::query()
+            ->where('id', $this->serviceId)
+            ->value('provider_id');
         $Order = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=getNumber&service=' . $idProvider . '&operator=any&country=6');
         switch ($Order) {
             case 'NO_NUMBERS':
@@ -67,7 +69,7 @@ class InstantOrder extends Component
             default:
                 $explode = explode(':', $Order);
                 if (Arr::exists($explode, 1) != true) {
-                    return $this->alert('error', '[Code 1] Tidak Tersedia!');
+                    return $this->alert('error', $Order);
                 }
                 $idOrder = $explode[1];
                 $number = $explode[2];

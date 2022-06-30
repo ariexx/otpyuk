@@ -12,6 +12,10 @@
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('modules/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('modules/fontawesome/css/all.min.css') }}">
+    <script src="{{ asset('modules/jquery.min.js') }}"></script>
+
+    <link href="{{ asset('modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
+    <script src="{{ asset('modules/select2/dist/js/select2.min.js') }}"></script>
 
     <!-- CSS Libraries -->
     {{-- <link rel="stylesheet" href="{{ asset('modules/datatables/datatables.min.css') }}">
@@ -36,7 +40,8 @@
             <nav class="navbar navbar-expand-lg main-navbar">
                 <a href="{{ url('/') }}"
                     class="navbar-brand sidebar-gone-hide">{{ config('app.name', 'Laravel') }}</a>
-                <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
+                <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i
+                        class="fas fa-bars"></i></a>
                 <div class="nav-collapse">
                     <a class="sidebar-gone-show nav-collapse-toggle nav-link" href="#">
                         <i class="fas fa-ellipsis-v"></i>
@@ -50,8 +55,7 @@
                         @guest()
                             @if (Route::has('login'))
                                 <li class="nav-item {{ request()->routeIs('login') ? 'active' : '' }}">
-                                    <a href="{{ route('login') }}"
-                                        class="nav-link"><span>{{ __('Login') }}</span></a>
+                                    <a href="{{ route('login') }}" class="nav-link"><span>{{ __('Login') }}</span></a>
                                 </li>
                             @endif
                         @else
@@ -68,8 +72,7 @@
                                     onclick="event.preventDefault();
                                                                                                                                                                                                                                                     document.getElementById('logout-form').submit();"><i
                                         class="fas fa-arrow-right"></i><span><b>{{ __('Logout') }}</b></span></a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </li>
@@ -126,7 +129,6 @@
     </div>
 
     <!-- General JS Scripts -->
-    <script src="{{ asset('modules/jquery.min.js') }}"></script>
     <script src="{{ asset('modules/popper.js') }}"></script>
     <script src="{{ asset('modules/tooltip.js') }}"></script>
     <script src="{{ asset('modules/bootstrap/js/bootstrap.min.js') }}"></script>
