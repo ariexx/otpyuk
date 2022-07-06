@@ -9,6 +9,7 @@ use Livewire\Component;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Enums\OrderStatusEnum;
+use Illuminate\Support\Facades\Http;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Normal extends Component
@@ -59,7 +60,7 @@ class Normal extends Component
             ]);
         }
         $idProvider = Service::query()->where('id', $this->serviceId)->value('provider_id');
-        $Order = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=getNumber&service=' . $idProvider . '&operator=' . $this->operatorId . '&country=6');
+        $Order = push_order($idProvider,   $this->operatorId);
         switch ($Order) {
             case 'NO_NUMBERS':
                 return $this->alert('error', 'No Numbers Available!');
@@ -90,9 +91,11 @@ class Normal extends Component
                     'start_at' => now(),
                     'expires_at' => now()->addMinutes(env('MINUTES_TO_EXPIRE_ORDER'))
                 ]);
-                $this->user->findOrFail(auth()->user()->id)->update([
-                    'balance' => $this->user->findOrFail(auth()->user()->id)->balance - Service::findOrFail($this->serviceId)->price,
-                ]);
+                $this->user
+                    ->findOrFail(auth()->user()->id)
+                    ->update([
+                        'balance' => $this->user->findOrFail(auth()->user()->id)->balance - Service::findOrFail($this->serviceId)->price,
+                    ]);
                 break;
         }
         $this->emit('refreshOrderTable');

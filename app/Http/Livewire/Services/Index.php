@@ -15,9 +15,9 @@ class Index extends Component
         $this->emit('servicesId', $this->servicesId);
     }
 
-    public function mount()
+    public function mount(Service $service)
     {
-        return $this->data = Service::query()->where('is_active', 1)->get();
+        return $this->data = $service::query()->where('is_active', 1)->get();
     }
 
     public function render()

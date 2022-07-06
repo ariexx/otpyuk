@@ -8,7 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <script src="{{ asset(mix('js/app.js')) }}" defer data-turbolinks-track="reload"></script>
+    {{-- <script src="{{ asset(mix('js/app.js')) }}" defer></script> --}}
+    {{-- <script src="{{ asset(mix('js/app.js')) }}" defer data-turbolinks-track="reload"></script> --}}
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('modules/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('modules/fontawesome/css/all.min.css') }}">
@@ -145,14 +146,14 @@
     <!-- Page Specific JS File -->
 
     <!-- Template JS File -->
-    <script src="{{ asset('js/scripts.js') }}"></script>
+    {{-- <script src="{{ asset('js/scripts.js') }}"></script> --}}
     {{-- <script src="js/custom.js"></script> --}}
     @include('sweetalert::alert')
 
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.4/dist/livewire-turbolinks.js"
-        data-turbolinks-eval="false" data-turbo-eval="false"></script>
-    @stack('scripts')
     @livewireScripts
+    {{-- <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.4/dist/livewire-turbolinks.js"
+        data-turbolinks-eval="false" data-turbo-eval="false"></script> --}}
+    @stack('scripts')
     @bukScripts
 
 </body>

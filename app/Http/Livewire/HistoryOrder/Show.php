@@ -22,8 +22,7 @@ class Show extends Component
     {
         //confirm sms and completed activation
         $idOrder = Order::query()->where('id', $id)->value('provider_order_id');
-        $completedActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=6&id=' . $idOrder);
-
+        $completedActivation = changeStatusActivation($idOrder, '6'); //6 = completed
         switch ($completedActivation) {
             case 'ACCESS_READY':
                 return $this->alert('success', 'SMS Waiting');
@@ -53,7 +52,8 @@ class Show extends Component
     {
         //request another sms
         $idOrder = Order::query()->where('id', $id)->value('provider_order_id');
-        $requestNewActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=3&id=' . $idOrder);
+        // $requestNewActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=3&id=' . $idOrder);
+        $requestNewActivation = changeStatusActivation($idOrder, '3'); //3 = request new activation
         switch ($requestNewActivation) {
             case 'ACCESS_READY':
                 return $this->alert('success', 'SMS Waiting');
@@ -78,10 +78,10 @@ class Show extends Component
 
     public function cancel($id)
     {
-        $Order = Order::query()->where('id', $id)->first();
-        $idOrder = Order::query()->where('id', $id)->value('provider_order_id');
-        // $cancelActivation = file_get_contents(env('SMSHUB_URL') . '?api_key=' . env('SMSHUB_API_KEY') . '&action=setStatus&status=8&id=' . $idOrder);
-        $cancelActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=8&id=' . $idOrder);
+        $Order = Order::where('id', $id)->first();
+        $idOrder = Order::where('id', $id)->value('provider_order_id');
+        // $cancelActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=8&id=' . $idOrder);
+        $cancelActivation = changeStatusActivation($idOrder, '8'); //8 = cancel activation
         switch ($cancelActivation) {
             case 'ACCESS_CANCEL':
                 User::findOrFail(auth()->user()->id)->update([
