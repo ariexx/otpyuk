@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\Http;
 
@@ -20,7 +21,6 @@ if (!function_exists('general_setting')) {
         return app(GeneralSettings::class);
     }
 }
-
 
 function push_order($idProvider, $operatorId)
 {
@@ -52,5 +52,8 @@ function changeStatusActivation($idOrder, ?int $status = null)
         ]
     ]);
 
-    // $completedActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=6&id=' . $idOrder);
+    function generateOrderId()
+    {
+        return rand(00000, 99999);
+    }
 }
