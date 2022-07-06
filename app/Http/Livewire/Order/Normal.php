@@ -9,10 +9,11 @@ use Livewire\Component;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Enums\OrderStatusEnum;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Normal extends Component
 {
-
+    use LivewireAlert;
     // public Order $order;
     public $serviceId = 1;
     public $operatorId = 1;
@@ -72,7 +73,7 @@ class Normal extends Component
             default:
                 $explode = explode(':', $Order);
                 if (Arr::exists($explode, 1) != true) {
-                    return $this->alert('error', '[Code 1] Tidak Tersedia!');
+                    return $this->alert('error', 'Error : Contact Admin');
                 }
                 $idOrder = $explode[1];
                 $number = $explode[2];
@@ -82,7 +83,7 @@ class Normal extends Component
                     'operator_id' => $this->operatorId,
                     'service_id' => $this->serviceId,
                     'provider_order_id' => $idOrder,
-                    'order_id' => Str::random(5),
+                    'order_id' => rand(00000000, 99999999),
                     'phone_number' => $number,
                     'sms_message' => '',
                     'status' => OrderStatusEnum::PENDING,

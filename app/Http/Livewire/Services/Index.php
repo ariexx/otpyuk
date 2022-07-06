@@ -17,10 +17,7 @@ class Index extends Component
 
     public function mount()
     {
-        $services = cache()->remember('services', now()->addDay(1), function () {
-            return $this->data = Service::query()->where('is_active', 1)->get();
-        });
-        return $services;
+        return $this->data = Service::query()->where('is_active', 1)->get();
     }
 
     public function render()

@@ -1,35 +1,26 @@
-<div class="form-group">
+<div class="form-group" wire:ignore.self>
     <label>Services :</label>
-    <div wire:ignore>
-        <select class="form-control live-search" wire:model='servicesId'>
-            @if (Cache::has('services'))
-                @foreach (Cache::get('services') as $service)
-                    <option value="{{ $service->id }}">
-                        {{ Str::ucfirst($service->service_name) }} -
-                        Rp.{{ $service->price }}
-                    </option>
-                @endforeach
-            @else
-                @foreach ($data as $service)
-                    <option value="{{ $service->id }}">{{ Str::ucfirst($service->service_name) }} -
-                        Rp.{{ $service->price }}
-                    </option>
-                    {{-- Todo: Disini idenya mau nampilin list services ke services.show --}}
-                @endforeach
-            @endif
-
-        </select>
-    </div>
+    <select class="form-control live-search" wire:model='servicesId'>
+        @foreach ($data as $service)
+            <option wire:key="item-{{ $service->id }}" value="{{ $service->id }}">
+                {{ Str::ucfirst($service->service_name) }} -
+                Rp.{{ $service->price }}
+            </option>
+            {{-- Todo: Disini idenya mau nampilin list services ke services.show --}}
+        @endforeach
+    </select>
     <hr />
 </div>
 
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('.live-search').select2();
+            $('.live-search').select2({
+                placeholder: 'Pilih Services',
+                // allowClear: true,
+            });
             $('.live-search').on('change', function(e) {
-                let data = $('.live-search').select2("val");
-                @this.set('servicesId', data);
+                Livewire.emit('servicesId', e.target.value);
             });
         });
     </script>

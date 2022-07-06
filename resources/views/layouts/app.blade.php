@@ -149,11 +149,12 @@
     {{-- <script src="js/custom.js"></script> --}}
     @include('sweetalert::alert')
 
-    @livewireScripts
-    @stack('scripts')
-    @bukScripts
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.4/dist/livewire-turbolinks.js"
         data-turbolinks-eval="false" data-turbo-eval="false"></script>
+    @stack('scripts')
+    @livewireScripts
+    @bukScripts
+
 </body>
 
 </html>
