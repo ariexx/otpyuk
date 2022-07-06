@@ -56,7 +56,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function operator()
@@ -72,5 +72,11 @@ class Order extends Model
     public function scopeStartWasExpired($query)
     {
         return $query->where('start_at', '<', Carbon::parse($this->start_at)->addMinutes(20));
+    }
+
+    public static function ratioOrder()
+    {
+        $date = Carbon::today()->format('m');
+        return self::whereMonth('created_at', $date)->count();
     }
 }

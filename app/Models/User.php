@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Models\Contracts\HasName;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
-use Filament\Models\Contracts\HasName;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -66,5 +67,11 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     public function deposit()
     {
         return  $this->hasMany(Deposit::class);
+    }
+
+    public static function ratioUser()
+    {
+        $date = Carbon::today()->format('m');
+        return self::whereMonth('created_at', $date)->count();
     }
 }

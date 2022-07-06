@@ -11,14 +11,12 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ServiceResource\Pages;
-use Filament\Forms\Components\Toggle;
-use App\Filament\Resources\ServiceResource\RelationManagers;
-use App\Filament\Resources\ServiceResource\RelationManagers\RatesRelationManager;
-use PowerComponents\LivewirePowerGrid\Themes\Components\Toggleable;
+use App\Filament\Resources\ServiceResource\Widgets\ServiceOverview;
 
 class ServiceResource extends Resource
 {
@@ -90,6 +88,13 @@ class ServiceResource extends Resource
     {
         return [
             // RelationManagers\RatesRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            ServiceOverview::class,
         ];
     }
 

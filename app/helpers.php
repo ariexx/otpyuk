@@ -30,6 +30,11 @@ function push_order($idProvider, $operatorId)
         'service' => $idProvider,
         'operator' => $operatorId,
         'country' => '6'
+    ], [
+        'headers' => [
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        ]
     ])->body();
 }
 
@@ -40,6 +45,11 @@ function changeStatusActivation($idOrder, ?int $status = null)
         'action' => 'setStatus',
         'status' => $status,
         'id' => $idOrder
+    ], [
+        'headers' => [
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        ]
     ]);
 
     // $completedActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=6&id=' . $idOrder);
