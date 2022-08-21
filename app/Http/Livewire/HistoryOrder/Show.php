@@ -13,15 +13,20 @@ class Show extends Component
 {
     use LivewireAlert;
     public $history;
-    public function mount($history)
+    public $user;
+    public $order;
+
+    public function mount($history, User $user, Order $order)
     {
         $this->history = $history;
+        $this->user = $user;
+        $this->order = $order;
     }
 
     public function done($id)
     {
         //confirm sms and completed activation
-        $idOrder = Order::query()->where('id', $id)->value('provider_order_id');
+        $idOrder = $this->order->valueProviderOrderId($id);
         $completedActivation = changeStatusActivation($idOrder, '6'); //6 = completed
         switch ($completedActivation) {
             case 'ACCESS_READY':
@@ -51,8 +56,7 @@ class Show extends Component
     public function repeat($id)
     {
         //request another sms
-        $idOrder = Order::query()->where('id', $id)->value('provider_order_id');
-        // $requestNewActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=3&id=' . $idOrder);
+        $idOrder = $this->order->valueProviderOrderId($id);
         $requestNewActivation = changeStatusActivation($idOrder, '3'); //3 = request new activation
         switch ($requestNewActivation) {
             case 'ACCESS_READY':
@@ -78,16 +82,18 @@ class Show extends Component
 
     public function cancel($id)
     {
-        $Order = Order::where('id', $id)->first();
-        $idOrder = Order::where('id', $id)->value('provider_order_id');
-        // $cancelActivation = file_get_contents('' . env('SMSHUB_URL') . '?api_key=' . env('PROVIDERS_APIKEY') . '&action=setStatus&status=8&id=' . $idOrder);
+        $order = $this->order->where('id', $id)->first();
+        $user = $this->user->where('id', $order->user_id)->first();
+
+        $idOrder = $this->order->valueProviderOrderId($id);
         $cancelActivation = changeStatusActivation($idOrder, '8'); //8 = cancel activation
         switch ($cancelActivation) {
             case 'ACCESS_CANCEL':
-                User::findOrFail(auth()->user()->id)->update([
-                    'balance' => User::findOrFail(auth()->user()->id)->balance + Order::findOrFail($id)->service->price,
-                ]);
-                Order::findOrFail($id)->update([
+                $this->user->findOrFail(auth()->id())
+                    ->update([
+                        'balance' => $user->balance + $order->service->price,
+                    ]);
+                $this->order->findOrFail($id)->update([
                     'status' => OrderStatusEnum::CANCELED,
                 ]);
                 return $this->alert('success', 'Success Cancel Order!');
@@ -105,9 +111,9 @@ class Show extends Component
                 return $this->alert('error', 'Something went wrong!');
                 break;
         }
-        if ($Order->expires_at->isPast()) {
-            User::findOrFail(auth()->user()->id)->update([
-                'balance' => User::findOrFail(auth()->user()->id)->balance + Order::findOrFail($id)->service->price,
+        if ($order->expires_at->isPast()) {
+            $this->user->findOrFail($user->id)->update([
+                'balance' => $user->balance + $order->service->price,
             ]);
             return $this->alert('error', 'Order Sudah Expired', [
                 'position' => 'center',

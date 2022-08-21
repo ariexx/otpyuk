@@ -8,7 +8,7 @@ use Livewire\Component;
 class Index extends Component
 {
     public $data;
-    public $servicesId = '';
+    public $servicesId;
 
     public function updatedServicesId()
     {

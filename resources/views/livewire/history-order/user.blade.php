@@ -13,9 +13,6 @@
             </tr>
         </thead>
         <tbody>
-            @php
-                $i = 1;
-            @endphp
             @foreach ($orders as $order)
                 <tr>
                     <td>{{ $loop->iteration }}</td>

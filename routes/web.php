@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Livewire\Auth\Login;
+use App\Settings\GeneralSettings;
 use App\Http\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HistoryOrderController;
 use App\Http\Controllers\Push\ServiceController;
-use App\Settings\GeneralSettings;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,10 @@ Route::middleware('auth', 'verified')->group(function () {
 Route::prefix('push')->group(function () {
     Route::get('/testapi', [ServiceController::class, 'index']);
     Route::get('/rate-update', [ServiceController::class, 'rateUpdate']);
+    Route::get('update-status', function () {
+        //call the command to update status
+        return Artisan::call('order:check');
+    });
 });
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth', 'verified');

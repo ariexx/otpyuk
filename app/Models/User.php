@@ -79,4 +79,9 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     {
         return self::whereMonth('created_at', now()->month)->count('id');
     }
+
+    public function getBalance($id)
+    {
+        return $this->where('id', $id)?->first()?->balance;
+    }
 }

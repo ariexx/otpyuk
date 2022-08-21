@@ -1,23 +1,15 @@
-@php
-$semuaPesan = $history->sms_message;
-$pecahPesan = explode(':', $semuaPesan);
-// if ($history->status === \App\Enums\OrderStatusEnum::REPEAT) {
-//     $lastPesan = '-';
-// }
-$lastPesan = last($pecahPesan);
-@endphp
 <tr>
-    <td>{{ $lastPesan }}</td>
+    <td>{{ $history->present_sms_message }}</td>
     <td>{{ $history->phone_number }}</td>
     <td>
-        @if ($history->status == \App\Enums\OrderStatusEnum::PENDING || $history->status == \App\Enums\OrderStatusEnum::PROCESSING || $history->status == \App\Enums\OrderStatusEnum::REPEAT)
+        @if ($history->status == \App\Enums\OrderStatusEnum::PENDING ||
+            $history->status == \App\Enums\OrderStatusEnum::PROCESSING ||
+            $history->status == \App\Enums\OrderStatusEnum::REPEAT)
             <x-countdown :expires="$history->expires_at">
                 @if ($history->expires_at->isPast())
                     -
                 @else
                     <span x-text="timer.minutes">{{ $component->minutes() }}</span> Menit
-
-                    {{-- <span x-text="timer.seconds">{{ $component->seconds() }}</span> --}}
                 @endif
             </x-countdown>
         @elseif($history->status == \App\Enums\OrderStatusEnum::CANCELED)
@@ -59,7 +51,6 @@ $lastPesan = last($pecahPesan);
                 @endphp
             @else
                 <button wire:click="done({{ $history->id }})" class="btn btn-success">Done</button>
-                {{-- <button wire:click="repeat({{ $history->id }})" class="btn btn-info">Repeat</button> --}}
             @endif
         @endif
     </td>

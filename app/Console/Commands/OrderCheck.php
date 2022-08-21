@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Order;
 use App\Enums\OrderStatusEnum;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class OrderCheck extends Command
 {
@@ -29,15 +30,16 @@ class OrderCheck extends Command
      */
     public function handle()
     {
-        $orders = Order::select('*')->where('status', '<>', OrderStatusEnum::COMPLETED)->get();
+        $orders = Order::where('status', '<>', OrderStatusEnum::COMPLETED)->get();
         foreach ($orders as $order) {
             $getStatusOrder = file_get_contents('https://smshub.org/stubs/handler_api.php?api_key=' . env('PROVIDERS_APIKEY') . '&action=getStatus&id=' . $order->provider_order_id);
             $explodeStatus = explode(':', $getStatusOrder);
-            info('Check Order id: ' . $order->id . ' - Provider Id ' . $order->provider_order_id . ' - status: ' . $explodeStatus[0]);
+            Log::info('Check Order id: ' . $order->id . ' - Provider Id ' . $order->provider_order_id . ' - status: ' . $explodeStatus[0]);
             switch ($getStatusOrder) {
                 case $explodeStatus[0] == 'STATUS_OK':
                     $order->update([
                         'status' => OrderStatusEnum::PROCESSING,
+                        'present_sms_message' => $order->sms_message,
                         'sms_message' => implode(':', [$order->sms_message, $explodeStatus[1]]),
                     ]);
                     break;
@@ -54,11 +56,12 @@ class OrderCheck extends Command
                 case $explodeStatus[0] == 'STATUS_WAIT_RETRY':
                     $order->update([
                         'status' => OrderStatusEnum::REPEAT,
+                        'present_sms_message' => $order->sms_message,
                         'sms_message' => implode(':', [$order->sms_message, $explodeStatus[1]]),
                     ]);
                     break;
                 default:
-                    info($getStatusOrder . ' Order ID: ' . $order->id);
+                    Log::info($getStatusOrder . ' Order ID: ' . $order->id);
                     break;
             }
         }

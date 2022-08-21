@@ -36,6 +36,7 @@ class Order extends Model
         'provider_order_id', //get from provider API
         'order_id',
         'phone_number',
+        'present_sms_message',
         'sms_message',
         'status',
         'start_at',
@@ -84,5 +85,10 @@ class Order extends Model
     {
         return self::query()->whereMonth('created_at', now()->month)->count('id');
         // return self::query()->where('created_at', '>=', Carbon::now()->subMonth())->count('id');
+    }
+
+    public function valueProviderOrderId($id)
+    {
+        return $this->query()->where('id', $id)->value('provider_order_id');
     }
 }
