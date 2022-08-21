@@ -4,6 +4,7 @@ use App\Http\Livewire\Auth\Login;
 use App\Settings\GeneralSettings;
 use App\Http\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
@@ -25,11 +26,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['login' => false, 'register' => false, 'verify' => true]);
+Route::get('daftar-harga', function () {
+    if (Cache::has('services')) {
+        $services = Cache::get('services');
+    } else {
+        $services = \App\Models\Service::where('is_active', 1)->get();
+        Cache::remember('services', now()->addDay(), function () use ($services) {
+            return $services;
+        });
+    }
+    return view('prices.index', compact('services'));
+})->name('prices.index');
 
-Route::get('test', function (GeneralSettings $setting) {
-    echo $setting->site_name;
-});
+Auth::routes(['login' => false, 'register' => false, 'verify' => true]);
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');

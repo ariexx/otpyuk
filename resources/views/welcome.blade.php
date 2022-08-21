@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <x-meta-tag />
     <title>{{ env('APP_NAME') ?? 'OTPYuk' }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" />
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
@@ -81,7 +83,7 @@
                         :class="{ 'flex': open, 'hidden': !open }">
                         <a href="#" class="nav-text font-semibold">{{ env('APP_NAME') ?? 'OTPYuk' }}</a>
                         <a class="nav-text text-lg font-light leading-6 mx-0 lg:mx-5 my-4 lg:my-0 relative"
-                            href="#">Daftar harga</a>
+                            href="{{ route('prices.index') }}">Daftar harga</a>
                         <div class="flex items-center justify-end w-full lg:hidden mt-3">
                             <a href="{{ route('login') }}"
                                 class="btn-login inline-flex text-black font-light text-lg leading-7 py-3 px-8 focus:outline-none">
@@ -137,7 +139,7 @@
                     </div>
                     <!-- Right Column -->
                     <div class="w-full lg:w-1/2 text-center justify-center flex pr-0">
-                        <img id="hero" src="undraw_new_message_re_fp03.svg" alt="" />
+                        <img id="hero" src="{{ asset('img/undraw_new_message_re_fp03.svg') }}" alt="" />
                     </div>
                 </div>
             </div>

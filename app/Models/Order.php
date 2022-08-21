@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Attributes\SearchUsingFullText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 
 class Order extends Model
 {
@@ -24,8 +25,8 @@ class Order extends Model
     {
         return [
             'order_id' => $this->order_id,
-            'sms_message' => $this->sms_message,
             'phone_number' => $this->phone_number,
+            'sms_message' => $this->sms_message,
         ];
     }
 

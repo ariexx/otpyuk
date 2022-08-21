@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <x-meta-tag />
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     {{-- <script src="{{ asset(mix('js/app.js')) }}" defer></script> --}}
@@ -19,10 +20,10 @@
     <script src="{{ asset('modules/select2/dist/js/select2.min.js') }}"></script>
 
     <!-- CSS Libraries -->
-    {{-- <link rel="stylesheet" href="{{ asset('modules/datatables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('modules/datatables/datatables.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" data-turbo-track="reload">
@@ -57,6 +58,10 @@
                             @if (Route::has('login'))
                                 <li class="nav-item {{ request()->routeIs('login') ? 'active' : '' }}">
                                     <a href="{{ route('login') }}" class="nav-link"><span>{{ __('Login') }}</span></a>
+                                </li>
+                                <li class="nav-item {{ request()->routeIs('prices.index') ? 'active' : '' }}">
+                                    <a href="{{ route('prices.index') }}"
+                                        class="nav-link"><span>{{ __('Daftar Harga') }}</span></a>
                                 </li>
                             @endif
                         @else
@@ -138,10 +143,10 @@
     <script src="{{ asset('js/stisla.js') }}"></script>
 
     <!-- JS Libraies -->
-    {{-- <script src="{{ asset('modules/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('modules/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('modules/jquery-ui/jquery-ui.min.js') }}"></script> --}}
+    <script src="{{ asset('modules/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <!-- Page Specific JS File -->
 

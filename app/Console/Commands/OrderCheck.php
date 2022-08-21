@@ -40,7 +40,7 @@ class OrderCheck extends Command
                     $order->update([
                         'status' => OrderStatusEnum::PROCESSING,
                         'present_sms_message' => $order->sms_message,
-                        'sms_message' => implode(':', [$order->sms_message, $explodeStatus[1]]),
+                        'sms_message' => implode(',', [$order->sms_message]),
                     ]);
                     break;
                 case 'STATUS_WAIT_CODE':
@@ -57,7 +57,7 @@ class OrderCheck extends Command
                     $order->update([
                         'status' => OrderStatusEnum::REPEAT,
                         'present_sms_message' => $order->sms_message,
-                        'sms_message' => implode(':', [$order->sms_message, $explodeStatus[1]]),
+                        'sms_message' => implode(',', [$order->sms_message]),
                     ]);
                     break;
                 default:

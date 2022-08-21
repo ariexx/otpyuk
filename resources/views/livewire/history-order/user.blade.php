@@ -7,6 +7,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Order ID</th>
+                <th scope="col">Service Name</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">SMS Message</th>
                 <th scope="col">Status</th>
@@ -14,9 +15,11 @@
         </thead>
         <tbody>
             @foreach ($orders as $order)
+                {{-- @dd($order); --}}
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $order->order_id }}</td>
+                    <td>{{ $order->service->service_name }}</td>
                     <td>{{ $order->phone_number }}</td>
                     <td>{{ $order->sms_message }}</td>
                     <td>

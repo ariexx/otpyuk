@@ -12,7 +12,10 @@ class User extends Component
 
     public function render()
     {
-        $orders = Order::search($this->search)->where('user_id', auth()->id())->paginate(10);
+        $orders = Order::search($this->search)->query(function ($builder) {
+            $builder->with(['service:id,service_name']);
+        })->where('user_id', auth()->id())->paginate(10);
+
         return view('livewire.history-order.user', compact('orders'));
     }
 }
