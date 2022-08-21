@@ -42,9 +42,4 @@ class Service extends Model
     {
         return $this->hasMany(Operator::class);
     }
-
-    public function order()
-    {
-        return $this->hasMany(Order::class);
-    }
 }
