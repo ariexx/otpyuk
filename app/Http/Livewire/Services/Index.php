@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Services;
 
 use App\Models\Service;
 use Livewire\Component;
+use Illuminate\Support\Facades\Cache;
 
 class Index extends Component
 {
@@ -15,9 +16,15 @@ class Index extends Component
         $this->emit('servicesId', $this->servicesId);
     }
 
-    public function mount(Service $service)
+    public function mount()
     {
-        return $this->data = $service::query()->where('is_active', 1)->get();
+        if (Cache::has('services')) {
+            return $this->data = Cache::get('services');
+        }
+
+        Cache::remember('services', now()->addDay(), function () {
+            return $this->data = Service::query()->where('is_active', 1)->get();
+        });
     }
 
     public function render()
