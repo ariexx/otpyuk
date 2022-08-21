@@ -35,7 +35,7 @@ class UserResource extends Resource
                         'Normal' => 'Normal',
                     ])
                     ->rules('required'),
-                Forms\Components\TextInput::make('balance')->label('Balance')->rules('required', 'numeric'),
+                Forms\Components\TextInput::make('balance')->label('Balance')->rules('required', 'numeric')->numeric(),
             ]));
     }
 

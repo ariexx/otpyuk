@@ -84,7 +84,7 @@ class Normal extends Component
                     'operator_id' => $this->operatorId,
                     'service_id' => $this->serviceId,
                     'provider_order_id' => $idOrder,
-                    'order_id' => generateOrderId(),
+                    'order_id' => rand(00000, 99999),
                     'phone_number' => $number,
                     'sms_message' => '',
                     'status' => OrderStatusEnum::PENDING,

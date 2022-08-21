@@ -22,16 +22,17 @@ class OrderStats extends BaseWidget
         //     rand(00, 99),
 
         // ];
+
         return [
-            Card::make('Total Order', Order::query()->count('id'))
-                ->description((Order::ratioOrder() === 0) ? Order::ratioOrder() . ' Decrease' : Order::ratioOrder() . ' Increase')
-                ->descriptionIcon((Order::ratioOrder() === 0) ? 'heroicon-s-trending-down' : 'heroicon-s-trending-up')
-                ->color((Order::ratioOrder() === 0) ? 'danger' : 'success'),
-            Card::make('Total User', User::query()->count('id'))
-                ->description((User::ratioUser() === 0) ? User::ratioUser() . ' Decrease' : User::ratioUser() . ' Increase')
-                ->descriptionIcon((User::ratioUser() === 0) ? 'heroicon-s-trending-down' : 'heroicon-s-trending-up')
-                ->color((User::ratioUser() === 0) ? 'danger' : 'success'),
-            Card::make('Total Pendapatan', $totalRevenue)
+            Card::make('Total Order Per Month', Order::getOrderPerMonth())
+                ->description(Order::ratioOrder() . ' Increase')
+                ->descriptionIcon('heroicon-s-trending-up')
+                ->color('success'),
+            Card::make('Total User Per Month', User::getUserPerMonth())
+                ->description(User::ratioUser() . ' Increase')
+                ->descriptionIcon('heroicon-s-trending-up')
+                ->color('success'),
+            Card::make('Total Revenue', $totalRevenue)
                 ->description('Total pendapatan yang telah diterima')
                 ->color('success'),
         ];

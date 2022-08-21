@@ -16,7 +16,7 @@ class LatestOrders extends BaseWidget
     // protected int | string | array $columnSpan = 'full';
     protected function getTableQuery(): Builder
     {
-        return Order::with('user:id,email')->latest()->limit(10);
+        return Order::select(['id', 'order_id', 'user_id', 'status', 'created_at'])->with('user:id,email')->latest()->limit(10);
     }
 
     protected function getTableColumns(): array

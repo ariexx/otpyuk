@@ -79,4 +79,10 @@ class Order extends Model
         $date = Carbon::today()->format('m');
         return self::whereMonth('created_at', $date)->count();
     }
+
+    public static function getOrderPerMonth()
+    {
+        return self::query()->whereMonth('created_at', now()->month)->count('id');
+        // return self::query()->where('created_at', '>=', Carbon::now()->subMonth())->count('id');
+    }
 }

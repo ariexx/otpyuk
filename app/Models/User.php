@@ -74,4 +74,9 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         $date = Carbon::today()->format('m');
         return self::whereMonth('created_at', $date)->count();
     }
+
+    public static function getUserPerMonth()
+    {
+        return self::whereMonth('created_at', now()->month)->count('id');
+    }
 }
