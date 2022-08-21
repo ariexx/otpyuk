@@ -60,3 +60,30 @@ if (!function_exists('generateOrderId')) {
         return now()->format('YmdHi') . rand(0000, 9999);
     }
 }
+
+if (!function_exists('ResponseJsonSuccess')) {
+    function ResponseJsonSuccess(?int $code, $message, $data = [])
+    {
+        return response()->json([
+            'result' => [
+                'code' => $code,
+                'status' => true,
+                'message' => $message,
+                'data' => $data
+            ]
+        ]);
+    }
+}
+
+if (!function_exists('ResponseJsonError')) {
+    function ResponseJsonError(?int $code, $message)
+    {
+        return response()->json([
+            'result' => [
+                'code' => $code,
+                'status' => false,
+                'message' => $message,
+            ]
+        ]);
+    }
+}

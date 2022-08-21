@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f54da41522d3ad8767b2e02bf772029",
+    "content-hash": "7055dff478566c2e77e6db5effa8de90",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -7772,6 +7772,56 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
             },
             "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "jason-guru/laravel-make-repository",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jason-guru/laravel-make-repository.git",
+                "reference": "693d3d189c0b19262a896eb888c3a7b870a2de43"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jason-guru/laravel-make-repository/zipball/693d3d189c0b19262a896eb888c3a7b870a2de43",
+                "reference": "693d3d189c0b19262a896eb888c3a7b870a2de43",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JasonGuru\\LaravelMakeRepository\\RepositoryServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JasonGuru\\LaravelMakeRepository\\": "src/"
+                },
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "G Jason Sharma",
+                    "email": "g.jason.sharma@gmail.com"
+                }
+            ],
+            "description": "A simple package to create a make:repository command for Laravel 5+",
+            "support": {
+                "issues": "https://github.com/jason-guru/laravel-make-repository/issues",
+                "source": "https://github.com/jason-guru/laravel-make-repository/tree/0.0.3"
+            },
+            "time": "2020-10-24T13:21:42+00:00"
         },
         {
             "name": "laravel/sail",
