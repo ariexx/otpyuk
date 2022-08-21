@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Carbon::setLocale('id');
         date_default_timezone_set('Asia/Jakarta');
         Paginator::useBootstrapFour();
-        Model::preventLazyLoading(!$this->app->isProduction()); //kenapa kgk keload, ini buat n+1 klo query lu double bakal muncul warn ini telescope buat ? debug ?lu tau laravel deubg bar ga
+        Model::preventLazyLoading(!$this->app->isProduction());
         if ($this->app->environment('production')) {
             // URL::forceScheme('https'); // gausah pake .htaccess lgi buat setting https itu udah di force sama si URL ?itu nanti buat di cpanel
         }
