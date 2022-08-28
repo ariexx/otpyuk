@@ -17,7 +17,12 @@ class Index extends Component
 
     public function mount()
     {
+        //cache the operator
+        if (cache()->has('operator')) {
+            $this->data = cache()->get('operator');
+        }
         $this->data = Operator::query()->select('id', 'operator_name')->get();
+        cache()->put('operator', $this->data, now()->addDecade());
     }
 
     public function render()
