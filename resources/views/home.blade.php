@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<x-modal :informations="$informations" />
 @section('content')
     <div class="section-header">
         <h1>{{ __('Dashboard') }}</h1>
