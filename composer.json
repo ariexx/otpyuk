@@ -24,6 +24,7 @@
         "livewire/livewire": "^2.10",
         "psr/simple-cache": "^1.0",
         "realrashid/sweet-alert": "^5.1",
+        "sentry/sentry-laravel": "^2.13",
         "spatie/laravel-settings": "^2.4",
         "tonysm/turbo-laravel": "^1.1"
     },

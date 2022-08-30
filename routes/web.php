@@ -22,6 +22,10 @@ use App\Http\Controllers\Push\ServiceController;
 |
 */
 
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
