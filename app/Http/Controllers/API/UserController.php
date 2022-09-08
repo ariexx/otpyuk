@@ -25,6 +25,6 @@ class UserController extends Controller
         } catch (InvalidArgumentException $e) {
             return ResponseJsonError(500, $e->getMessage());
         }
-        return ResponseJsonSuccess(200, __('messages.success'), $result);
+        return ResponseJsonSuccess(200, __('messages.success.get', ['name' => 'User']), $result);
     }
 }

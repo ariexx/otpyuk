@@ -9,7 +9,4 @@ enum OrderStatusEnum: int
     case COMPLETED = 2;
     case CANCELED = 3;
     case PENDING = 4;
-    // case 2 = 'Processing';
-    // case 3 = 'Done';
-    // case 4 = 'Canceled';
 }

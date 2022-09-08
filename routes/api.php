@@ -26,4 +26,13 @@ Route::prefix('v1')->group(function () {
 
     //service
     Route::get('service', 'API\ServiceController@getAll');
+
+    //new order
+    Route::post('order', 'API\OrderController@store');
+
+    //check order
+    Route::get('order', 'API\OrderController@check');
+
+    //update order
+    Route::put('order', 'API\OrderController@update');
 });
