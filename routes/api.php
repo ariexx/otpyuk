@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Page Not Found. If error persists, contact admin.',
+        'status' => '404',
+    ], 404);
+});
+
+
+Route::prefix('v1')->group(function () {
+    Route::get('user/{apikey}', 'API\UserController@show');
+
+    //service
+    Route::get('service', 'API\ServiceController@getAll');
+
+    //new order
+    Route::post('order', 'API\OrderController@store');
+
+    //check order
+    Route::get('order', 'API\OrderController@check');
+
+    //update order
+    Route::put('order', 'API\OrderController@update');
 });

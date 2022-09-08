@@ -68,7 +68,7 @@ class Order extends Model
 
     public function service()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
     public function scopeStartWasExpired($query)
@@ -85,11 +85,15 @@ class Order extends Model
     public static function getOrderPerMonth()
     {
         return self::query()->whereMonth('created_at', now()->month)->count('id');
-        // return self::query()->where('created_at', '>=', Carbon::now()->subMonth())->count('id');
     }
 
     public function valueProviderOrderId($id)
     {
         return $this->query()->where('id', $id)->value('provider_order_id');
+    }
+
+    public function getStatusEnum($status)
+    {
+        return $status;
     }
 }

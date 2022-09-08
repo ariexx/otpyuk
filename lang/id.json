@@ -1,0 +1,13 @@
+{
+    "not-found": ":name tidak ditemukan",
+    "messages.error.get": ":name gagal diambil",
+    "messages.success.get": ":name berhasil diambil",
+    "messages.error.create": ":name gagal dibuat",
+    "messages.success.create": ":name berhasil dibuat",
+    "messages.error.update": ":name gagal diperbarui",
+    "messages.success.update": ":name berhasil diperbarui",
+    "messages.error.delete": ":name gagal dihapus",
+    "messages.success.delete": ":name berhasil dihapus",
+    "api.error.500": "Terjadi kesalahan pada server",
+    "messages.error.no_numbers": "Tidak ada nomor yang dapat dibeli"
+}

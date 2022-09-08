@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Response;
 
@@ -43,5 +44,7 @@ class AppServiceProvider extends ServiceProvider
                 'message' => $data,
             ]);
         });
+
+        JsonResource::withoutWrapping();
     }
 }

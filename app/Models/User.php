@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Models\Information;
 use Laravel\Sanctum\HasApiTokens;
 use Filament\Models\Contracts\HasName;
 use Illuminate\Notifications\Notifiable;
@@ -83,5 +84,27 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     public function getBalance($id)
     {
         return $this->where('id', $id)?->first()?->balance;
+    }
+
+    public function getDetails($apikey)
+    {
+        return $this->where('apikey', $apikey)?->firstOrFail();
+    }
+
+    public static function checkApikey($apikey)
+    {
+        return self::where('apikey', $apikey)->exists();
+    }
+
+    public function hasSeenModal()
+    {
+        return $this->informations_seen_at !== null;
+    }
+
+    //check if the last seen is lower than the last information
+    public function hasSeenLastInformation()
+    {
+        return Information::latest()->first()->created_at > $this->informations_seen_at;
+        //10-10-2022 > 10-10-2021 = true
     }
 }
