@@ -42,4 +42,14 @@ class Service extends Model
     {
         return $this->hasMany(Operator::class);
     }
+
+    public function getPrice($id)
+    {
+        return $this->findOrFail($id)->price;
+    }
+
+    public function getProviderId($serviceId)
+    {
+        return $this->findOrFail($serviceId)->provider_id;
+    }
 }

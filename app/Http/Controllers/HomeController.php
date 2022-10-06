@@ -27,19 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $balance = User::findOrFail(auth()->id())->balance;
-        if (Cache::has('informations')) {
-            $informations = Cache::get('informations');
-        } else {
-            $informations = Information::activeInformations();
-            Cache::remember('informations', now()->addDay(), function () use ($informations) {
-                return $informations;
-            });
-        }
 
-        if (auth()->user()->hasSeenModal()) {
-            $informations = null;
-        }
-
-        return view('home', compact('balance', 'informations'));
+        return view('home', compact('balance'));
     }
 }

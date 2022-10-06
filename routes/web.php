@@ -22,10 +22,6 @@ use App\Http\Controllers\Push\ServiceController;
 |
 */
 
-Route::get('/debug-sentry', function () {
-    throw new Exception('My first Sentry error!');
-});
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -56,11 +52,16 @@ Route::middleware('auth', 'verified')->group(function () {
 
 //route push
 Route::prefix('push')->group(function () {
-    Route::get('/testapi', [ServiceController::class, 'index']);
-    Route::get('/rate-update', [ServiceController::class, 'rateUpdate']);
+    Route::get('get-services', [ServiceController::class, 'index']);
+    Route::get('rate-update', [ServiceController::class, 'rateUpdate']);
     Route::get('update-status', function () {
         //call the command to update status
         return Artisan::call('order:check');
+    });
+    Route::get('clear-cache', function () {
+        //call the command to update status
+        Artisan::call('cache:clear');
+        return abort(404);
     });
 });
 

@@ -56,28 +56,53 @@ class Normal extends Component
     public function normalOrder()
     {
         $this->validate();
-        if ($this->user->getBalance(auth()->id()) < $this->service->findOrFail($this->serviceId)->price) {
+
+        $balance = $this->user->getBalance($this->userId);
+        $price = $this->service->getPrice($this->serviceId);
+
+        if ($balance < $price) {
+            Log::alert('Saldo provider tidak cukup');
             return $this->alert('error', 'Saldo Tidak Mencukupi');
         }
-        $idProvider = $this->service->where('id', $this->serviceId)->value('provider_id');
-        $Order = push_order($idProvider,   $this->operatorId);
-        switch ($Order) {
+
+        $idProvider = $this->service->getProviderId($this->serviceId);
+        $order = push_order($idProvider,   $this->operatorId);
+        switch ($order) {
             case 'NO_NUMBERS':
-                return $this->alert('error', 'No Numbers Available!');
+                Log::alert("Response : " . $order);
+                $this->alert('error', 'No Numbers Available!');
                 break;
             case 'NO_BALANCE':
-                Log::alert('Balance Not Enough');
-                return $this->alert('error', 'Contact Admin!');
+                Log::alert('Balance Not Enough : ' . $order);
+                $this->alert('error', 'Contact Admin!');
                 break;
             case 'WRONG_SERVICE':
-                return $this->alert('error', 'Service Not Found!');
+                Log::alert('Wrong Service : ' . $order);
+                $this->alert('error', 'Service Not Found!');
+                break;
+            case 'BAD_SERVICE':
+                Log::alert('Wrong Service : ' . $order);
+                $this->alert('error', 'Service Not Found!');
+                break;
+            case 'MAIL_RULE':
+                Log::alert('Mail Rule : ' . $order);
+                $this->alert('error', 'Contact Admin!');
+                break;
+            case 'BAD_ACTION':
+                Log::alert('Bad Action : ' . $order);
+                $this->alert('error', 'Contact Admin!');
+                break;
+            case 'BAD_KEY':
+                Log::alert('Bad Key : ' . $order);
+                $this->alert('error', 'Contact Admin!');
+                break;
+            case 'ERROR_SQL':
+                Log::alert('Error SQL : ' . $order);
+                $this->alert('error', 'Contact Admin!');
                 break;
             default:
-                $explode = explode(':', $Order);
-                if (Arr::exists($explode, 1) != true) {
-                    Log::alert('Order Not Found ' . $Order);
-                    return $this->alert('error', 'Error : Contact Admin');
-                }
+                $explode = explode(':', $order);
+
                 $idOrder = $explode[1];
                 $number = $explode[2];
 
@@ -92,12 +117,13 @@ class Normal extends Component
                     'sms_message' => '',
                     'status' => OrderStatusEnum::PENDING,
                     'start_at' => now(),
-                    'expires_at' => now()->addMinutes(env('MINUTES_TO_EXPIRE_ORDER'))
+                    'expires_at' => now()->addMinutes(config('smshub.timeout'))
                 ]);
+
                 $this->user
                     ->findOrFail($this->userId)
                     ->update([
-                        'balance' => $this->user->findOrFail($this->userId)->balance - $this->service->findOrFail($this->serviceId)->price,
+                        'balance' => $balance - $price,
                     ]);
                 break;
         }
