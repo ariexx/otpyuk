@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use Response;
 use Exception;
+use App\Models\Order;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -153,6 +155,11 @@ class OrderService
                     ' trace ' . json_encode($data)
             );
             return ResponseJsonError(400, $validator->errors()->first());
+        }
+
+        $order = Order::where('order_id', $data['order_id'])->firstOrFail();
+        if ($order->status->value == 3) {
+            return ResponseJsonError(403, __('Status order sudah dibatalkan'));
         }
 
         try {
