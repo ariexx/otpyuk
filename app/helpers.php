@@ -60,7 +60,7 @@ if (!function_exists('ResponseJsonSuccess')) {
                 'message' => $message,
                 'data' => $data
             ]
-        ]);
+        ], $code);
     }
 }
 
@@ -73,6 +73,6 @@ if (!function_exists('ResponseJsonError')) {
                 'status' => false,
                 'message' => $message,
             ]
-        ]);
+        ], $code);
     }
 }

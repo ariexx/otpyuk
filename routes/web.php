@@ -23,7 +23,11 @@ use App\Http\Controllers\Push\ServiceController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect()->route('home');
+    } else {
+        return redirect()->route('login');
+    }
 });
 
 Route::get('daftar-harga', function () {

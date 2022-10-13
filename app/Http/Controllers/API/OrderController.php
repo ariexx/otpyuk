@@ -21,8 +21,14 @@ class OrderController extends Controller
         try {
             $result = $this->service->store($data);
         } catch (Exception $e) {
-            Log::alert('Error order api : ' . $e->getMessage() . ' at ' . $e->getFile() . ' line ' . $e->getLine() . ' trace ' . $e->getTraceAsString() . ' code ' . $e->getCode());
-            return ResponseJsonError(500, __('api.error.500'));
+            Log::alert(
+                'Error order api : ' . $e->getMessage() . '
+                at ' . $e->getFile() . '
+                line ' . $e->getLine() . '
+                trace ' . $e->getTraceAsString() . '
+                code ' . $e->getCode()
+            );
+            $result = ResponseJsonError(500, __('api.error.500'));
         }
         return $result;
     }
@@ -33,7 +39,13 @@ class OrderController extends Controller
         try {
             $result = $this->service->check($data);
         } catch (Exception $e) {
-            Log::alert('Error check order api : ' . $e->getMessage() . ' at ' . $e->getFile() . ' line ' . $e->getLine() . ' trace ' . $e->getTraceAsString() . ' code ' . $e->getCode());
+            Log::alert(
+                'Error check order api : ' . $e->getMessage() . '
+            at ' . $e->getFile() . '
+            line ' . $e->getLine() . '
+            trace ' . $e->getTraceAsString() . '
+            code ' . $e->getCode()
+            );
             return ResponseJsonError(500, __('api.error.500'));
         }
         return $result;
@@ -45,8 +57,13 @@ class OrderController extends Controller
         try {
             $result = $this->service->update($data);
         } catch (Exception $e) {
-            Log::alert('Error update order api : ' . $e->getMessage() . ' at ' . $e->getFile() . ' line ' . $e->getLine() . ' trace ' . $e->getTraceAsString() . ' code ' . $e->getCode());
-            return ResponseJsonError(500, __('api.error.500'));
+            Log::alert('Error update order api : ' . $e->getMessage() . '
+            at ' . $e->getFile() . '
+            line ' . $e->getLine() . '
+            trace ' . $e->getTraceAsString() . '
+            code ' . $e->getCode());
+
+            $result = ResponseJsonError(500, __('api.error.500'));
         }
         return $result;
     }

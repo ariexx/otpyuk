@@ -37,7 +37,12 @@ class OrderService
         );
 
         if ($validator->fails()) {
-            Log::alert('Error order api : ' . $validator->errors()->first() . ' at ' . __FILE__ . ' line ' . __LINE__ . ' trace ' . json_encode($data));
+            Log::alert(
+                'Error order api : ' . $validator->errors()->first() .
+                    ' at ' . __FILE__ .
+                    ' line ' . __LINE__ .
+                    ' trace ' . json_encode($data)
+            );
             return ResponseJsonError(400, $validator->errors()->first());
         }
 
@@ -46,11 +51,23 @@ class OrderService
             $result = $this->repo->store($data);
         } catch (InvalidArgumentException $e) {
             DB::rollBack();
-            Log::alert('Error order api : ' . $e->getMessage() . ' at ' . $e->getFile() . ' line ' . $e->getLine() . ' trace ' . $e->getTraceAsString() . ' code ' . $e->getCode());
+            Log::alert(
+                'Error order api : ' . $e->getMessage() .
+                    ' at ' . $e->getFile() .
+                    ' line ' . $e->getLine() .
+                    ' trace ' . $e->getTraceAsString() .
+                    ' code ' . $e->getCode()
+            );
             return ResponseJsonError(400, $e->getMessage());
         } catch (Exception $e) {
             DB::rollBack();
-            Log::alert('Error order api : ' . $e->getMessage() . ' at ' . $e->getFile() . ' line ' . $e->getLine() . ' trace ' . $e->getTraceAsString() . ' code ' . $e->getCode());
+            Log::alert(
+                'Error order api : ' . $e->getMessage() .
+                    ' at ' . $e->getFile() .
+                    ' line ' . $e->getLine() .
+                    ' trace ' . $e->getTraceAsString() .
+                    ' code ' . $e->getCode()
+            );
             return ResponseJsonError(500, __('api.error.500'));
         }
         DB::commit();
@@ -77,17 +94,34 @@ class OrderService
         );
 
         if ($validator->fails()) {
-            Log::alert('Error check order api : ' . $validator->errors()->first() . ' at ' . __FILE__ . ' line ' . __LINE__ . ' trace ' . json_encode($data));
+            Log::alert(
+                'Error check order api : ' . $validator->errors()->first() .
+                    ' at ' . __FILE__ .
+                    ' line ' . __LINE__ .
+                    ' trace ' . json_encode($data)
+            );
             return ResponseJsonError(400, $validator->errors()->first());
         }
 
         try {
             $result = $this->repo->check($data);
         } catch (InvalidArgumentException $e) {
-            Log::alert('Error check order api : ' . $e->getMessage() . ' at ' . $e->getFile() . ' line ' . $e->getLine() . ' trace ' . $e->getTraceAsString() . ' code ' . $e->getCode());
+            Log::alert(
+                'Error check order api : ' . $e->getMessage() .
+                    ' at ' . $e->getFile() .
+                    ' line ' . $e->getLine() .
+                    ' trace ' . $e->getTraceAsString() .
+                    ' code ' . $e->getCode()
+            );
             return ResponseJsonError(400, $e->getMessage());
         } catch (Exception $e) {
-            Log::alert('Error check order api : ' . $e->getMessage() . ' at ' . $e->getFile() . ' line ' . $e->getLine() . ' trace ' . $e->getTraceAsString() . ' code ' . $e->getCode());
+            Log::alert(
+                'Error check order api : ' . $e->getMessage() .
+                    ' at ' . $e->getFile() .
+                    ' line ' . $e->getLine() .
+                    ' trace ' . $e->getTraceAsString() .
+                    ' code ' . $e->getCode()
+            );
             return ResponseJsonError(500, __('api.error.500'));
         }
         return $result;
@@ -112,18 +146,35 @@ class OrderService
         ]);
 
         if ($validator->fails()) {
-            Log::alert('Error update order api : ' . $validator->errors()->first() . ' at ' . __FILE__ . ' line ' . __LINE__ . ' trace ' . json_encode($data));
+            Log::alert(
+                'Error update order api : ' . $validator->errors()->first() .
+                    ' at ' . __FILE__ .
+                    ' line ' . __LINE__ .
+                    ' trace ' . json_encode($data)
+            );
             return ResponseJsonError(400, $validator->errors()->first());
         }
 
         try {
             $result = $this->repo->update($data);
         } catch (InvalidArgumentException $e) {
-            Log::alert('Error update order api : ' . $e->getMessage() . ' at ' . $e->getFile() . ' line ' . $e->getLine() . ' trace ' . $e->getTraceAsString() . ' code ' . $e->getCode());
-            return ResponseJsonError(400, $e->getMessage());
+            Log::alert(
+                'Error update order api : ' . $e->getMessage() .
+                    ' at ' . $e->getFile() .
+                    ' line ' . $e->getLine() .
+                    ' trace ' . $e->getTraceAsString() .
+                    ' code ' . $e->getCode()
+            );
+            $result = ResponseJsonError(400, $e->getMessage());
         } catch (Exception $e) {
-            Log::alert('Error update order api : ' . $e->getMessage() . ' at ' . $e->getFile() . ' line ' . $e->getLine() . ' trace ' . $e->getTraceAsString() . ' code ' . $e->getCode());
-            return ResponseJsonError(500, __('api.error.500'));
+            Log::alert(
+                'Error update order api : ' . $e->getMessage() .
+                    ' at ' . $e->getFile() .
+                    ' line ' . $e->getLine() .
+                    ' trace ' . $e->getTraceAsString() .
+                    ' code ' . $e->getCode()
+            );
+            $result = ResponseJsonError(500, __('api.error.500'));
         }
         return $result;
     }

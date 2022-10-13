@@ -95,7 +95,7 @@ class OrderRepository
 
     public function check($data)
     {
-        $order = $this->model->with('service:id,service_name')->where('order_id', $data['order_id'])->first();
+        $order = $this->model->with('service:id,service_name')->where('order_id', $data['order_id'])->firstOrFail();
         if (!$order) {
             return ResponseJsonError(400, __('not-found', ['name' => 'Order']));
         }

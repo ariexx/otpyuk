@@ -88,7 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function getDetails($apikey)
     {
-        return $this->where('apikey', $apikey)?->firstOrFail();
+        return $this->where('apikey', $apikey)->firstOrFail();
     }
 
     public static function checkApikey($apikey)
