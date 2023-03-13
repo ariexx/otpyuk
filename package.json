@@ -24,6 +24,6 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
-        "autoprefixer": "10.4.5"
+        "autoprefixer": "10.4.14"
     }
 }
