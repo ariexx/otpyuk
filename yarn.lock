@@ -962,7 +962,7 @@
   version "0.0.51"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-0.0.51.tgz"
 
-"@types/express-serve-static-core@*", "@types/express-serve-static-core@^4.17.18":
+"@types/express-serve-static-core@*", "@types/express-serve-static-core@4.17.28", "@types/express-serve-static-core@^4.17.18":
   version "4.17.28"
   resolved "https://registry.npmjs.org/@types/express-serve-static-core/-/express-serve-static-core-4.17.28.tgz"
   dependencies:
@@ -1038,6 +1038,10 @@
 "@types/node@*":
   version "17.0.35"
   resolved "https://registry.npmjs.org/@types/node/-/node-17.0.35.tgz"
+
+"@types/node@^14.14.31":
+  version "14.18.41"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.41.tgz#02003a5b3102239f33fabf8cfeba4bc11fbf4703"
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -3597,10 +3601,12 @@ punycode@^2.1.0:
   version "2.1.1"
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.1.1.tgz"
 
-pusher-js@^7.0.3:
-  version "7.0.6"
-  resolved "https://registry.npmjs.org/pusher-js/-/pusher-js-7.0.6.tgz"
+pusher-js@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/pusher-js/-/pusher-js-8.0.2.tgz#8fe3e2a90bda4bd1aa68f25dd644ffa0ac4dbd0d"
   dependencies:
+    "@types/express-serve-static-core" "4.17.28"
+    "@types/node" "^14.14.31"
     tweetnacl "^1.0.3"
 
 qs@6.10.3:
