@@ -21,7 +21,7 @@
         "pusher-js": "^8.0.2",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.32.11",
-        "sass-loader": "^13.3.1"
+        "sass-loader": "^13.3.2"
     },
     "dependencies": {
         "autoprefixer": "10.4.5"
