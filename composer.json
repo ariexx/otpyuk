@@ -15,7 +15,7 @@
         "filament/filament": "^2.0",
         "flowframe/laravel-trend": "^0.1.1",
         "guzzlehttp/guzzle": "^7.2",
-        "jantinnerezo/livewire-alert": "^2.2",
+        "jantinnerezo/livewire-alert": "^3.0",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",
         "laravel/scout": "^9.4",
